@@ -18,12 +18,13 @@ class MonochromeView: UIView {
     // User Properties
     private var pointToDraw: CGFloat = 0.5
     private var numberOfArcsToBeDrawn = 0
-    private var isMonochromBar = true
+    private var isMonochromBar = false
     
     // CALayer Properties
-    let outerArclineWidth: CGFloat = 20
+    private let outerArclineWidth: CGFloat = 20
+    private let animationDuration: Double = 3
     
-    var currentIndex = 0
+    private var currentIndex = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,10 +66,10 @@ class MonochromeView: UIView {
             }
         }
         print("numberOfArcsToBeDrawn", numberOfArcsToBeDrawn)
-        drawThreeCircles()
+        drawCircles()
     }
     
-    func drawThreeCircles() {
+    func drawCircles() {
         while currentIndex < numberOfArcsToBeDrawn {
             let layer = CAShapeLayer()
             
@@ -92,7 +93,7 @@ class MonochromeView: UIView {
             let animation = CABasicAnimation(keyPath: "strokeEnd")
             animation.fromValue = 0.0
             animation.toValue = 1.0
-            animation.duration = 0.5
+            animation.duration = getDuration()
             animation.delegate = self
             layer.add(animation, forKey: "end_\(currentIndex)")
             currentIndex = currentIndex + 1
@@ -102,6 +103,18 @@ class MonochromeView: UIView {
     
     private func getRadians(_ point: CGFloat) -> CGFloat {
         return (180*point)+180
+    }
+    
+    private func getDuration() -> Double {
+        if currentIndex == numberOfArcsToBeDrawn-1 {
+            let difference = Double(pointToDraw - data[currentIndex].startAngle)
+            print(difference*animationDuration)
+            return difference * animationDuration
+        } else {
+            let difference = Double(data[currentIndex].endAngle - data[currentIndex].startAngle)
+            print(difference*animationDuration)
+            return difference * animationDuration
+        }
     }
     
     private func configureView() {
@@ -118,6 +131,6 @@ class MonochromeView: UIView {
 
 extension MonochromeView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        drawThreeCircles()
+        drawCircles()
     }
 }
