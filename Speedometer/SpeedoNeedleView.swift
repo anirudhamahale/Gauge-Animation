@@ -9,15 +9,16 @@
 import UIKit
 
 class SpeedoNeedleView: UIView {
-
+    
     let numberOfSections = 5
     let totalSectionSize = 180
     var sectionDifference = 0
+    var isMonochromBar = true
     var layers = [CAShapeLayer]()
     let colors = [UIColor.blue, UIColor.purple, UIColor.green, UIColor.magenta, UIColor.yellow]
     var index = 0
     var reverseAnimation = false
-    let duration = 1.0
+    let duration = 0.3
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,14 +28,23 @@ class SpeedoNeedleView: UIView {
         super.init(coder: aDecoder)
     }
     
-    lazy var needleImageView: UIImageView = {
+    private lazy var needleImageView: UIImageView = {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "Needle"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
+    func startTheAnimation() {
+        index = 0
+        reverseAnimation = false
+        layers.removeAll()
+        animateSpeedometerEntry()
+        animateNeedle(fromValue: 0, toValue: Double.pi)
+    }
     
-    func configureView() {
+    
+    private func configureView() {
         self.addSubview(needleImageView)
         
         needleImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -43,27 +53,31 @@ class SpeedoNeedleView: UIView {
         needleImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.7, constant: 0).isActive = true
         
         sectionDifference = totalSectionSize / numberOfSections
-        animateSpeedometerEntry()
-        animateNeedle()
+        startTheAnimation()
     }
     
-    func animateNeedle() {
-        let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.fromValue = 0
-        animation.toValue = Double.pi
+    private func animateNeedle(fromValue: Double, toValue: Double) {
+        let animation = CABasicAnimation(keyPath: "transform.rotation.z")
+        animation.fromValue = fromValue
+        animation.toValue = toValue
         animation.duration = duration * Double(numberOfSections)
+        animation.fillMode = kCAFillModeForwards
         animation.isRemovedOnCompletion = false
         needleImageView.layer.add(animation, forKey: "end_\(index)")
     }
     
-    func animateSpeedometerEntry() {
+    private func animateSpeedometerEntry() {
         while index < numberOfSections {
             let layer = CAShapeLayer()
             layer.path = self.createRectangle(startAngle: CGFloat(180+(index*self.sectionDifference)), endAngle: CGFloat(180+((index+1)*self.sectionDifference))).cgPath
             layer.lineWidth = 10
+            if isMonochromBar {
+                layer.strokeColor = self.colors[index].cgColor
+            }
             layer.strokeColor = self.colors[index].cgColor
             layer.fillColor = UIColor.white.cgColor
             
+            layer.name = "\(index)"
             self.layer.addSublayer(layer)
             self.layers.append(layer)
             
@@ -82,9 +96,10 @@ class SpeedoNeedleView: UIView {
         index = index - 1
         reverseAnimation = true
         animateSpeedometerExit()
+        animateNeedle(fromValue: Double.pi, toValue: 0)
     }
     
-    func animateSpeedometerExit() {
+    private func animateSpeedometerExit() {
         while index > -1 {
             let layer = layers[index]
             
@@ -96,10 +111,20 @@ class SpeedoNeedleView: UIView {
             animation.toValue = 0.0
             animation.duration = duration
             animation.delegate = self
-            animation.isRemovedOnCompletion = true
+            //animation.fillMode = kCAFillModeForwards
+            //animation.isRemovedOnCompletion = false
             layer.add(animation, forKey: "end_\(index)")
             index = index - 1
             break
+        }
+    }
+    
+    private func removeLayer() {
+        for item in self.layer.sublayers! {
+            if item.name == "\(index+1)" {
+                item.removeFromSuperlayer()
+                item.removeAllAnimations()
+            }
         }
     }
     
@@ -108,7 +133,7 @@ class SpeedoNeedleView: UIView {
         configureView()
     }
     
-    func createRectangle(startAngle: CGFloat, endAngle: CGFloat) -> UIBezierPath {
+    private func createRectangle(startAngle: CGFloat, endAngle: CGFloat) -> UIBezierPath {
         // Initialize the path.
         return UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2), radius: self.frame.size.height/2-2, startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true)
     }
@@ -117,6 +142,7 @@ class SpeedoNeedleView: UIView {
 extension SpeedoNeedleView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if reverseAnimation {
+            removeLayer()
             animateSpeedometerExit()
         } else {
             animateSpeedometerEntry()
