@@ -10,7 +10,21 @@ import UIKit
 
 class DynamicSpeedoViewController: UIViewController {
 
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var spView: MonochromeView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        textField.text = "50"
+    }
+    
+    @IBAction func changedSwitch(_ sender: UISwitch) {
+        let value = Float(textField.text!)!/100
+        print(value)
+        if sender.isOn {
+            spView.configureView(with: CGFloat(value), isMonoChrome: true)
+        } else {
+            spView.configureView(with: CGFloat(value), isMonoChrome: false)
+        }
     }
 }

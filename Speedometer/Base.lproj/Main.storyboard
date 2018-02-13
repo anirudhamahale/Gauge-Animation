@@ -121,17 +121,38 @@
                                     <constraint firstAttribute="width" secondItem="9tb-GC-pSD" secondAttribute="height" multiplier="1:1" id="ljg-Nk-hxE"/>
                                 </constraints>
                             </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DFp-ws-RNP">
+                                <rect key="frame" x="50" y="70" width="51" height="31"/>
+                                <connections>
+                                    <action selector="changedSwitch:" destination="esO-uu-oIH" eventType="valueChanged" id="h96-gR-36k"/>
+                                </connections>
+                            </switch>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="leP-DW-EL6">
+                                <rect key="frame" x="155" y="70" width="170" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="DFp-ws-RNP" firstAttribute="leading" secondItem="Ndj-dm-nz7" secondAttribute="leading" constant="50" id="0qr-Vj-S6x"/>
                             <constraint firstItem="9tb-GC-pSD" firstAttribute="centerY" secondItem="Syn-vK-nIY" secondAttribute="centerY" id="2jD-TD-8Cb"/>
                             <constraint firstItem="9tb-GC-pSD" firstAttribute="width" secondItem="9tb-GC-pSD" secondAttribute="height" multiplier="1:1" id="6GZ-Od-7kv"/>
                             <constraint firstItem="Ndj-dm-nz7" firstAttribute="trailing" secondItem="9tb-GC-pSD" secondAttribute="trailing" constant="50" id="7Dh-nq-pBK"/>
+                            <constraint firstItem="leP-DW-EL6" firstAttribute="leading" secondItem="DFp-ws-RNP" secondAttribute="trailing" constant="56" id="BKl-fO-1Ip"/>
                             <constraint firstItem="9tb-GC-pSD" firstAttribute="width" secondItem="9tb-GC-pSD" secondAttribute="height" multiplier="1:1" id="EpO-4e-Gv9"/>
+                            <constraint firstItem="Ndj-dm-nz7" firstAttribute="trailing" secondItem="leP-DW-EL6" secondAttribute="trailing" constant="50" id="lCE-6U-iPI"/>
                             <constraint firstItem="9tb-GC-pSD" firstAttribute="leading" secondItem="Ndj-dm-nz7" secondAttribute="leading" constant="50" id="pwu-LN-da8"/>
+                            <constraint firstItem="leP-DW-EL6" firstAttribute="centerY" secondItem="DFp-ws-RNP" secondAttribute="centerY" id="yrL-nJ-L3c"/>
+                            <constraint firstItem="DFp-ws-RNP" firstAttribute="top" secondItem="Ndj-dm-nz7" secondAttribute="top" constant="50" id="zDg-sH-fWC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ndj-dm-nz7"/>
                     </view>
+                    <connections>
+                        <outlet property="spView" destination="9tb-GC-pSD" id="62L-Kl-wN9"/>
+                        <outlet property="textField" destination="leP-DW-EL6" id="X0o-aE-0tW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wq9-jY-ZXz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

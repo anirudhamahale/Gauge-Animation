@@ -36,7 +36,8 @@ class MonochromeView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        configureView()
+        
+        configureView(with: 0.5, isMonoChrome: false)
     }
     
     private func drawOutlineArc() {
@@ -59,7 +60,7 @@ class MonochromeView: UIView {
         self.layer.addSublayer(layer)
     }
     
-    func calculateNumberOfArcsRequiredAndDraw() {
+    private func calculateNumberOfArcsRequiredAndDraw() {
         for (index, value) in data.enumerated() {
             if pointToDraw > value.startAngle {
                 numberOfArcsToBeDrawn = index+1
@@ -69,7 +70,7 @@ class MonochromeView: UIView {
         drawCircles()
     }
     
-    func drawCircles() {
+    private func drawCircles() {
         while currentIndex < numberOfArcsToBeDrawn {
             let layer = CAShapeLayer()
             
@@ -117,15 +118,25 @@ class MonochromeView: UIView {
         }
     }
     
-    private func configureView() {
+    public func configureView(with point: CGFloat, isMonoChrome: Bool) {
+        self.layer.sublayers?.removeAll()
+        resetViews()
+        pointToDraw = point
+        isMonochromBar = isMonoChrome
         drawOutlineArc()
-        // drawInnerArcTest()
         calculateNumberOfArcsRequiredAndDraw()
     }
     
     private func createRectangle(startAngle: CGFloat, endAngle: CGFloat) -> CGPath {
         // Initialize the path.
         return UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2), radius: self.frame.size.height/2-(outerArclineWidth/2), startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true).cgPath
+    }
+    
+    private func resetViews() {
+        pointToDraw = 0.5
+        numberOfArcsToBeDrawn = 0
+        isMonochromBar = false
+        currentIndex = 0
     }
 }
 
