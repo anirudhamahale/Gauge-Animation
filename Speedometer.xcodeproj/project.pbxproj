@@ -15,6 +15,8 @@
 		8F6A03662031906E00D15562 /* SpeedoMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A03652031906E00D15562 /* SpeedoMeterView.swift */; };
 		8F6A036820329B3B00D15562 /* NeedleSpeedoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A036720329B3B00D15562 /* NeedleSpeedoViewController.swift */; };
 		8F6A036A2032A00F00D15562 /* SpeedoNeedleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A03692032A00F00D15562 /* SpeedoNeedleView.swift */; };
+		8F6A036D2032C27100D15562 /* MonochromeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A036C2032C27100D15562 /* MonochromeView.swift */; };
+		8F6A036F2032C38700D15562 /* DynamicSpeedoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A036E2032C38700D15562 /* DynamicSpeedoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		8F6A03652031906E00D15562 /* SpeedoMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedoMeterView.swift; sourceTree = "<group>"; };
 		8F6A036720329B3B00D15562 /* NeedleSpeedoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedleSpeedoViewController.swift; sourceTree = "<group>"; };
 		8F6A03692032A00F00D15562 /* SpeedoNeedleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedoNeedleView.swift; sourceTree = "<group>"; };
+		8F6A036C2032C27100D15562 /* MonochromeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonochromeView.swift; sourceTree = "<group>"; };
+		8F6A036E2032C38700D15562 /* DynamicSpeedoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSpeedoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,17 +64,27 @@
 		8F6A035220318EE100D15562 /* Speedometer */ = {
 			isa = PBXGroup;
 			children = (
+				8F6A036B2032C1DE00D15562 /* Custome Views */,
 				8F6A035320318EE100D15562 /* AppDelegate.swift */,
 				8F6A036720329B3B00D15562 /* NeedleSpeedoViewController.swift */,
 				8F6A035520318EE100D15562 /* ViewController.swift */,
-				8F6A03652031906E00D15562 /* SpeedoMeterView.swift */,
-				8F6A03692032A00F00D15562 /* SpeedoNeedleView.swift */,
+				8F6A036E2032C38700D15562 /* DynamicSpeedoViewController.swift */,
 				8F6A035720318EE100D15562 /* Main.storyboard */,
 				8F6A035A20318EE100D15562 /* Assets.xcassets */,
 				8F6A035C20318EE100D15562 /* LaunchScreen.storyboard */,
 				8F6A035F20318EE100D15562 /* Info.plist */,
 			);
 			path = Speedometer;
+			sourceTree = "<group>";
+		};
+		8F6A036B2032C1DE00D15562 /* Custome Views */ = {
+			isa = PBXGroup;
+			children = (
+				8F6A03652031906E00D15562 /* SpeedoMeterView.swift */,
+				8F6A036C2032C27100D15562 /* MonochromeView.swift */,
+				8F6A03692032A00F00D15562 /* SpeedoNeedleView.swift */,
+			);
+			name = "Custome Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +162,8 @@
 				8F6A035620318EE100D15562 /* ViewController.swift in Sources */,
 				8F6A035420318EE100D15562 /* AppDelegate.swift in Sources */,
 				8F6A036820329B3B00D15562 /* NeedleSpeedoViewController.swift in Sources */,
+				8F6A036F2032C38700D15562 /* DynamicSpeedoViewController.swift in Sources */,
+				8F6A036D2032C27100D15562 /* MonochromeView.swift in Sources */,
 				8F6A036A2032A00F00D15562 /* SpeedoNeedleView.swift in Sources */,
 				8F6A03662031906E00D15562 /* SpeedoMeterView.swift in Sources */,
 			);
