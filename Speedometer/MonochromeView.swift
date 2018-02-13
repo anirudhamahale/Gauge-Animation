@@ -9,25 +9,21 @@
 import UIKit
 
 class MonochromeView: UIView {
-    let numberOfSections = 5
-    let totalSectionSize = 180
-    var sectionDifference = 0
-    var isMonochromBar = true
-    var layers = [CAShapeLayer]()
-    let colors = [UIColor.blue, UIColor.purple, UIColor.green, UIColor.magenta, UIColor.yellow]
-    var currentIndex = 0
-    let duration = 0.3
-    
     // MonoChromeArc Properties
-    let monoChromeColor: [UIColor] = [.green, // percentage <= 30
-                                      .yellow, // percentage between 31 - 35
-                                      .red // percentage > 36
-    ]
+    
+    let data = [Angle(startAngle: 0, endAngle: 0.3, color: .green),
+                Angle(startAngle: 0.30, endAngle: 0.35, color: .yellow),
+                Angle(startAngle: 0.35, endAngle: 1.0, color: .red)]
+    
+    // User Properties
+    private var pointToDraw: CGFloat = 0.5
+    private var numberOfArcsToBeDrawn = 0
+    private var isMonochromBar = true
     
     // CALayer Properties
     let outerArclineWidth: CGFloat = 20
     
-    
+    var currentIndex = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +42,7 @@ class MonochromeView: UIView {
         let layer = CAShapeLayer()
         layer.path = self.createRectangle(startAngle: CGFloat(179.5), endAngle: CGFloat(0.5))
         layer.lineWidth = outerArclineWidth
-        layer.strokeColor = UIColor.black.cgColor
+        layer.strokeColor = UIColor.lightGray.cgColor
         layer.fillColor = UIColor.clear.cgColor
         layer.name = "OutlineArc"
         self.layer.addSublayer(layer)
@@ -62,30 +58,66 @@ class MonochromeView: UIView {
         self.layer.addSublayer(layer)
     }
     
-    func drawThreeCircles() {
-        let startAngle: [CGFloat] = [180, 234, 243]
-        let endAngle: [CGFloat] = [234, 243, 0.0]
-        for i in 0...2 {
-            let layer = CAShapeLayer()
-            layer.path = self.createRectangle(startAngle: startAngle[i], endAngle: endAngle[i])
-            layer.lineWidth = outerArclineWidth-2
-            layer.strokeColor = monoChromeColor[i].cgColor
-            layer.fillColor = UIColor.clear.cgColor
-            layer.name = "innerCircle\(i)"
-            self.layer.addSublayer(layer)
+    func calculateNumberOfArcsRequiredAndDraw() {
+        for (index, value) in data.enumerated() {
+            if pointToDraw > value.startAngle {
+                numberOfArcsToBeDrawn = index+1
+            }
         }
+        print("numberOfArcsToBeDrawn", numberOfArcsToBeDrawn)
+        drawThreeCircles()
+    }
+    
+    func drawThreeCircles() {
+        while currentIndex < numberOfArcsToBeDrawn {
+            let layer = CAShapeLayer()
+            
+            if currentIndex == numberOfArcsToBeDrawn-1 {
+                layer.path = self.createRectangle(startAngle: getRadians(data[currentIndex].startAngle), endAngle: getRadians(pointToDraw))
+            } else {
+                layer.path = self.createRectangle(startAngle: getRadians(data[currentIndex].startAngle), endAngle: getRadians(data[currentIndex].endAngle))
+            }
+            
+            layer.lineWidth = outerArclineWidth-2
+            if isMonochromBar {
+                layer.strokeColor = data[numberOfArcsToBeDrawn-1].color.cgColor
+            } else {
+                layer.strokeColor = data[currentIndex].color.cgColor
+            }
+            
+            layer.fillColor = UIColor.clear.cgColor
+            layer.name = "innerCircle\(currentIndex)"
+            self.layer.addSublayer(layer)
+            
+            let animation = CABasicAnimation(keyPath: "strokeEnd")
+            animation.fromValue = 0.0
+            animation.toValue = 1.0
+            animation.duration = 0.5
+            animation.delegate = self
+            layer.add(animation, forKey: "end_\(currentIndex)")
+            currentIndex = currentIndex + 1
+            break
+        }
+    }
+    
+    private func getRadians(_ point: CGFloat) -> CGFloat {
+        return (180*point)+180
     }
     
     private func configureView() {
         drawOutlineArc()
         // drawInnerArcTest()
-        drawThreeCircles()
-        sectionDifference = totalSectionSize / numberOfSections
+        calculateNumberOfArcsRequiredAndDraw()
     }
     
     private func createRectangle(startAngle: CGFloat, endAngle: CGFloat) -> CGPath {
         // Initialize the path.
         return UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2), radius: self.frame.size.height/2-(outerArclineWidth/2), startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true).cgPath
     }
-    
+}
+
+extension MonochromeView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        drawThreeCircles()
+    }
 }

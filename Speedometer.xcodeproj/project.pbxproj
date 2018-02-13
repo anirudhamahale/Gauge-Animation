@@ -17,6 +17,7 @@
 		8F6A036A2032A00F00D15562 /* SpeedoNeedleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A03692032A00F00D15562 /* SpeedoNeedleView.swift */; };
 		8F6A036D2032C27100D15562 /* MonochromeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A036C2032C27100D15562 /* MonochromeView.swift */; };
 		8F6A036F2032C38700D15562 /* DynamicSpeedoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A036E2032C38700D15562 /* DynamicSpeedoViewController.swift */; };
+		8F6A03712032E31600D15562 /* STRUCT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6A03702032E31600D15562 /* STRUCT.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		8F6A03692032A00F00D15562 /* SpeedoNeedleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedoNeedleView.swift; sourceTree = "<group>"; };
 		8F6A036C2032C27100D15562 /* MonochromeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonochromeView.swift; sourceTree = "<group>"; };
 		8F6A036E2032C38700D15562 /* DynamicSpeedoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSpeedoViewController.swift; sourceTree = "<group>"; };
+		8F6A03702032E31600D15562 /* STRUCT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STRUCT.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				8F6A036B2032C1DE00D15562 /* Custome Views */,
 				8F6A035320318EE100D15562 /* AppDelegate.swift */,
 				8F6A036720329B3B00D15562 /* NeedleSpeedoViewController.swift */,
+				8F6A03702032E31600D15562 /* STRUCT.swift */,
 				8F6A035520318EE100D15562 /* ViewController.swift */,
 				8F6A036E2032C38700D15562 /* DynamicSpeedoViewController.swift */,
 				8F6A035720318EE100D15562 /* Main.storyboard */,
@@ -163,6 +166,7 @@
 				8F6A035420318EE100D15562 /* AppDelegate.swift in Sources */,
 				8F6A036820329B3B00D15562 /* NeedleSpeedoViewController.swift in Sources */,
 				8F6A036F2032C38700D15562 /* DynamicSpeedoViewController.swift in Sources */,
+				8F6A03712032E31600D15562 /* STRUCT.swift in Sources */,
 				8F6A036D2032C27100D15562 /* MonochromeView.swift in Sources */,
 				8F6A036A2032A00F00D15562 /* SpeedoNeedleView.swift in Sources */,
 				8F6A03662031906E00D15562 /* SpeedoMeterView.swift in Sources */,
