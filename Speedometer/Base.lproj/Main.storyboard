@@ -67,13 +67,34 @@
                                     <constraint firstAttribute="width" secondItem="SRz-lJ-4Uq" secondAttribute="height" multiplier="1:1" id="TXh-rk-WY6"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-P8-EPV">
+                                <rect key="frame" x="139" y="607" width="97" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcM-eY-d8r">
+                                        <rect key="frame" x="0.0" y="0.0" width="34" height="30"/>
+                                        <state key="normal" title="Start"/>
+                                        <connections>
+                                            <action selector="didTapStart:" destination="IyO-ab-cJu" eventType="touchUpInside" id="hHp-SF-aOW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffy-ER-AIR">
+                                        <rect key="frame" x="42" y="0.0" width="55" height="30"/>
+                                        <state key="normal" title="Reverse"/>
+                                        <connections>
+                                            <action selector="didTapReverse:" destination="IyO-ab-cJu" eventType="touchUpInside" id="fSb-4n-SX9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="SRz-lJ-4Uq" firstAttribute="centerY" secondItem="s5A-wA-FJ2" secondAttribute="centerY" id="6AR-Fv-CCN"/>
+                            <constraint firstItem="SF4-rb-C7i" firstAttribute="bottom" secondItem="DYc-P8-EPV" secondAttribute="bottom" constant="30" id="NCK-CH-k8a"/>
                             <constraint firstItem="SRz-lJ-4Uq" firstAttribute="width" secondItem="SRz-lJ-4Uq" secondAttribute="height" multiplier="1:1" id="Nqz-ft-ugC"/>
                             <constraint firstItem="SF4-rb-C7i" firstAttribute="trailing" secondItem="SRz-lJ-4Uq" secondAttribute="trailing" constant="50" id="OxU-xY-l1d"/>
                             <constraint firstItem="SRz-lJ-4Uq" firstAttribute="leading" secondItem="SF4-rb-C7i" secondAttribute="leading" constant="50" id="Urt-8u-M2C"/>
+                            <constraint firstItem="DYc-P8-EPV" firstAttribute="centerX" secondItem="s5A-wA-FJ2" secondAttribute="centerX" id="sfJ-Zo-fBk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SF4-rb-C7i"/>
                     </view>

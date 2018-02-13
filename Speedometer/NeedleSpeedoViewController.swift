@@ -16,4 +16,12 @@ class NeedleSpeedoViewController: UIViewController {
         super.viewDidLoad()
 
     }
+    
+    @IBAction func didTapReverse(_ sender: Any) {
+        speedoView.reverseTheAnimation()
+    }
+    
+    @IBAction func didTapStart(_ sender: Any) {
+        speedoView.startTheAnimation()
+    }
 }
