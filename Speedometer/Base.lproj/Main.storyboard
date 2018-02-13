@@ -116,7 +116,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9tb-GC-pSD" customClass="MonochromeView" customModule="Speedometer" customModuleProvider="target">
                                 <rect key="frame" x="50" y="196" width="275" height="275"/>
-                                <color key="backgroundColor" red="0.55294117649999996" green="0.23137254900000001" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9tb-GC-pSD" secondAttribute="height" multiplier="1:1" id="ljg-Nk-hxE"/>
                                 </constraints>

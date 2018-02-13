@@ -18,8 +18,16 @@ class MonochromeView: UIView {
     var currentIndex = 0
     let duration = 0.3
     
+    // MonoChromeArc Properties
+    let monoChromeColor: [UIColor] = [.green, // percentage <= 30
+                                      .yellow, // percentage between 31 - 35
+                                      .red // percentage > 36
+    ]
+    
     // CALayer Properties
-    let outerCirclelineWidth: CGFloat = 20
+    let outerArclineWidth: CGFloat = 20
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,37 +42,50 @@ class MonochromeView: UIView {
         configureView()
     }
     
-    private func drawOutlineCircle() {
+    private func drawOutlineArc() {
         let layer = CAShapeLayer()
-        layer.path = self.createRectangle(startAngle: CGFloat(179.5), endAngle: CGFloat(0.5), radius: self.frame.size.height/2-(outerCirclelineWidth/2))
-        layer.lineWidth = outerCirclelineWidth
+        layer.path = self.createRectangle(startAngle: CGFloat(179.5), endAngle: CGFloat(0.5))
+        layer.lineWidth = outerArclineWidth
         layer.strokeColor = UIColor.black.cgColor
         layer.fillColor = UIColor.clear.cgColor
-        
+        layer.name = "OutlineArc"
         self.layer.addSublayer(layer)
     }
     
-    private func drawInnerCircle() {
-        let radius = self.frame.size.height/2-(outerCirclelineWidth/2)
+    private func drawInnerArcTest() {
         let layer = CAShapeLayer()
-        layer.path = self.createRectangle(startAngle: CGFloat(180), endAngle: CGFloat(0.0), radius: radius)
-        layer.lineWidth = outerCirclelineWidth-2
+        layer.path = self.createRectangle(startAngle: CGFloat(180), endAngle: CGFloat(0.0))
+        layer.lineWidth = outerArclineWidth-2
         layer.strokeColor = UIColor.yellow.cgColor
         layer.fillColor = UIColor.clear.cgColor
-        
+        layer.name = "InnerArcTest"
         self.layer.addSublayer(layer)
+    }
+    
+    func drawThreeCircles() {
+        let startAngle: [CGFloat] = [180, 234, 243]
+        let endAngle: [CGFloat] = [234, 243, 0.0]
+        for i in 0...2 {
+            let layer = CAShapeLayer()
+            layer.path = self.createRectangle(startAngle: startAngle[i], endAngle: endAngle[i])
+            layer.lineWidth = outerArclineWidth-2
+            layer.strokeColor = monoChromeColor[i].cgColor
+            layer.fillColor = UIColor.clear.cgColor
+            layer.name = "innerCircle\(i)"
+            self.layer.addSublayer(layer)
+        }
     }
     
     private func configureView() {
-        drawOutlineCircle()
-        drawInnerCircle()
+        drawOutlineArc()
+        // drawInnerArcTest()
+        drawThreeCircles()
         sectionDifference = totalSectionSize / numberOfSections
     }
     
-    
-    private func createRectangle(startAngle: CGFloat, endAngle: CGFloat, radius: CGFloat) -> CGPath {
+    private func createRectangle(startAngle: CGFloat, endAngle: CGFloat) -> CGPath {
         // Initialize the path.
-        return UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2), radius: radius, startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true).cgPath
+        return UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2), radius: self.frame.size.height/2-(outerArclineWidth/2), startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true).cgPath
     }
     
 }
