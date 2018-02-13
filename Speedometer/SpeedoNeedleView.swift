@@ -13,6 +13,7 @@ class SpeedoNeedleView: UIView {
     let numberOfSections = 5
     let totalSectionSize = 180
     var sectionDifference = 0
+    var isMonochromBar = true
     var layers = [CAShapeLayer]()
     let colors = [UIColor.blue, UIColor.purple, UIColor.green, UIColor.magenta, UIColor.yellow]
     var index = 0
@@ -70,6 +71,9 @@ class SpeedoNeedleView: UIView {
             let layer = CAShapeLayer()
             layer.path = self.createRectangle(startAngle: CGFloat(180+(index*self.sectionDifference)), endAngle: CGFloat(180+((index+1)*self.sectionDifference))).cgPath
             layer.lineWidth = 10
+            if isMonochromBar {
+                layer.strokeColor = self.colors[index].cgColor
+            }
             layer.strokeColor = self.colors[index].cgColor
             layer.fillColor = UIColor.white.cgColor
             
