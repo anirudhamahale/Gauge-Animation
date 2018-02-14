@@ -13,4 +13,5 @@ struct Angle {
     let startAngle: CGFloat
     let endAngle: CGFloat
     let color: UIColor
+    var duration: Double
 }

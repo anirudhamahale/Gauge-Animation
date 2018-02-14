@@ -11,9 +11,9 @@ import UIKit
 class MonochromeView: UIView {
     // MonoChromeArc Properties
     
-    let data = [Angle(startAngle: 0, endAngle: 0.3, color: .green),
-                Angle(startAngle: 0.30, endAngle: 0.35, color: .yellow),
-                Angle(startAngle: 0.35, endAngle: 1.0, color: .red)]
+    var data = [Angle(startAngle: 0, endAngle: 0.3, color: .green, duration: 1.0),
+                Angle(startAngle: 0.30, endAngle: 0.35, color: .yellow, duration: 1.0),
+                Angle(startAngle: 0.35, endAngle: 1.0, color: .red, duration: 1.0)]
     
     // User Properties
     private var pointToDraw: CGFloat = 0.5
@@ -66,25 +66,42 @@ class MonochromeView: UIView {
                 numberOfArcsToBeDrawn = index+1
             }
         }
+        
+        calculateDurationSlots()
         print("numberOfArcsToBeDrawn", numberOfArcsToBeDrawn)
         drawCircles()
+    }
+    
+    private func calculateDurationSlots() {
+        let percentage = animationDuration/Double(pointToDraw*100)
+        for index in 0...numberOfArcsToBeDrawn-1 {
+            if pointToDraw < data[index].endAngle && pointToDraw > data[index].startAngle {
+                let difference = pointToDraw*100-data[index].startAngle*100
+                let duration = Double(difference) * percentage
+                data[index].duration = duration
+            } else {
+                let difference = data[index].endAngle*100 - data[index].startAngle*100
+                let duration = Double(difference) * percentage
+                data[index].duration = duration
+            }
+        }
     }
     
     private func drawCircles() {
         while currentIndex < numberOfArcsToBeDrawn {
             let layer = CAShapeLayer()
-            
+            let currentData = data[currentIndex]
             if currentIndex == numberOfArcsToBeDrawn-1 {
-                layer.path = self.createRectangle(startAngle: getRadians(data[currentIndex].startAngle), endAngle: getRadians(pointToDraw))
+                layer.path = self.createRectangle(startAngle: getRadians(currentData.startAngle), endAngle: getRadians(pointToDraw))
             } else {
-                layer.path = self.createRectangle(startAngle: getRadians(data[currentIndex].startAngle), endAngle: getRadians(data[currentIndex].endAngle))
+                layer.path = self.createRectangle(startAngle: getRadians(currentData.startAngle), endAngle: getRadians(currentData.endAngle))
             }
             
             layer.lineWidth = outerArclineWidth-2
             if isMonochromBar {
                 layer.strokeColor = data[numberOfArcsToBeDrawn-1].color.cgColor
             } else {
-                layer.strokeColor = data[currentIndex].color.cgColor
+                layer.strokeColor = currentData.color.cgColor
             }
             
             layer.fillColor = UIColor.clear.cgColor
@@ -94,7 +111,7 @@ class MonochromeView: UIView {
             let animation = CABasicAnimation(keyPath: "strokeEnd")
             animation.fromValue = 0.0
             animation.toValue = 1.0
-            animation.duration = getDuration()
+            animation.duration = currentData.duration
             animation.delegate = self
             layer.add(animation, forKey: "end_\(currentIndex)")
             currentIndex = currentIndex + 1
@@ -104,18 +121,6 @@ class MonochromeView: UIView {
     
     private func getRadians(_ point: CGFloat) -> CGFloat {
         return (180*point)+180
-    }
-    
-    private func getDuration() -> Double {
-        if currentIndex == numberOfArcsToBeDrawn-1 {
-            let difference = Double(pointToDraw - data[currentIndex].startAngle)
-            print(difference*animationDuration)
-            return difference * animationDuration
-        } else {
-            let difference = Double(data[currentIndex].endAngle - data[currentIndex].startAngle)
-            print(difference*animationDuration)
-            return difference * animationDuration
-        }
     }
     
     public func configureView(with point: CGFloat, isMonoChrome: Bool) {
