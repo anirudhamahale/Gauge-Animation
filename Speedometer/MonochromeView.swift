@@ -20,6 +20,12 @@ class MonochromeView: UIView {
     private var numberOfArcsToBeDrawn = 0
     private var isMonochromBar = false
     
+    
+    /// This holds the starting angle of the arc.
+    private let arcStartAngleInDegrees: CGFloat = 157.5
+    /// This holds the total area of the arc.
+    private let totalArcArea: CGFloat = 225
+    
     // CALayer Properties
     private let outerArclineWidth: CGFloat = 20
     private let animationDuration: Double = 1
@@ -43,7 +49,7 @@ class MonochromeView: UIView {
     
     private func drawOutlineArc() {
         let layer = CAShapeLayer()
-        layer.path = self.createRectangle(startAngle: CGFloat(179.5), endAngle: CGFloat(0.5))
+        layer.path = self.createRectangle(startAngle: CGFloat(157), endAngle: CGFloat(22))
         layer.lineWidth = outerArclineWidth
         layer.strokeColor = UIColor.lightGray.cgColor
         layer.fillColor = UIColor.clear.cgColor
@@ -53,7 +59,7 @@ class MonochromeView: UIView {
     
     private func drawInnerArcTest() {
         let layer = CAShapeLayer()
-        layer.path = self.createRectangle(startAngle: CGFloat(180), endAngle: CGFloat(0.0))
+        layer.path = self.createRectangle(startAngle: CGFloat(157.5), endAngle: CGFloat(22.5))
         layer.lineWidth = outerArclineWidth-2
         layer.strokeColor = UIColor.yellow.cgColor
         layer.fillColor = UIColor.clear.cgColor
@@ -122,7 +128,7 @@ class MonochromeView: UIView {
     }
     
     private func getRadians(_ point: CGFloat) -> CGFloat {
-        return (180*point)+180
+        return (totalArcArea*point)+arcStartAngleInDegrees
     }
     
     public func configureView(with point: CGFloat, isMonoChrome: Bool) {
