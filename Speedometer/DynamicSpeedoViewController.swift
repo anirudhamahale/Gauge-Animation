@@ -15,11 +15,11 @@ class DynamicSpeedoViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var monoSwitch: UISwitch!
     
-    var value: CGFloat = 0.0
+    var value: CGFloat = 50
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        value = CGFloat(slider.value)
+        value = getValue()
         label.text = "\(Int(slider.value))"
     }
     
@@ -29,16 +29,24 @@ class DynamicSpeedoViewController: UIViewController {
     }
     
     @IBAction func changedSwitch(_ sender: UISwitch) {
-        let newValue = value/100
         if sender.isOn {
-            spView.configureView(with: newValue, isMonoChrome: true)
+            spView.configureView(with: getValue(), isMonoChrome: true)
         } else {
-            spView.configureView(with: newValue, isMonoChrome: false)
+            spView.configureView(with: getValue(), isMonoChrome: false)
         }
     }
     
     @IBAction func didTapAnimate(_ sender: UIButton) {
-        let newValue = value/100
-        spView.configureView(with: newValue, isMonoChrome: monoSwitch.isOn ? true : false)
+        spView.configureView(with: getValue(), isMonoChrome: monoSwitch.isOn ? true : false)
+    }
+    
+    
+    /// Round the decimal places to 2 points and return CGFloat
+    ///
+    /// - Returns: CGFloat with 2 decimal places
+    func getValue() -> CGFloat {
+        value = value / 100
+        let y =  Double(round(100*value)/100)
+        return CGFloat(y)
     }
 }
