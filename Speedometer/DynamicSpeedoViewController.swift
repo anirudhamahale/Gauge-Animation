@@ -46,7 +46,6 @@ class DynamicSpeedoViewController: UIViewController {
     func getValue() -> CGFloat {
         let dividedValue = value / 100
         let y =  Double(round(100*dividedValue)/100)
-        print("point ", CGFloat(y))
         return CGFloat(y)
     }
 }

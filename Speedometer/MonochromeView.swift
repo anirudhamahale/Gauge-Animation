@@ -23,6 +23,7 @@ class MonochromeView: UIView {
     // CALayer Properties
     private let outerArclineWidth: CGFloat = 20
     private let animationDuration: Double = 1
+    private var previousStartAngle: CGFloat = 3.13
     
     private var currentIndex = 0
     
@@ -62,11 +63,11 @@ class MonochromeView: UIView {
     
     private func calculateNumberOfArcsRequiredAndDraw() {
         for (index, value) in data.enumerated() {
-            print("****************")
-            print(pointToDraw)
-            print(value.startAngle)
-            print(value.endAngle)
-            print("\n")
+//            print("****************")
+//            print(pointToDraw)
+//            print(value.startAngle)
+//            print(value.endAngle)
+//            print("\n")
             if pointToDraw > value.startAngle {
                 // Since the index is starting from 0, doing +1
                 numberOfArcsToBeDrawn = index+1
@@ -140,6 +141,12 @@ class MonochromeView: UIView {
     
     private func createRectangle(startAngle: CGFloat, endAngle: CGFloat) -> CGPath {
         // Initialize the path.
+        print("*****************")
+        print(startAngle.toRadians())
+        // print(getValue(value: startAngle.toRadians()))
+        print(endAngle.toRadians())
+        // print(getValue(value: endAngle.toRadians()))
+        print("\n")
         return UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2), radius: self.frame.size.height/2-(outerArclineWidth/2), startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true).cgPath
     }
     
