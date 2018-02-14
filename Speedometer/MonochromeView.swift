@@ -11,9 +11,9 @@ import UIKit
 class MonochromeView: UIView {
     // MonoChromeArc Properties
     
-    var data = [Angle(startAngle: 0, endAngle: 0.30, color: .green, duration: 1.0),
-                Angle(startAngle: 0.30, endAngle: 0.35, color: .yellow, duration: 1.0),
-                Angle(startAngle: 0.35, endAngle: 1.0, color: .red, duration: 1.0)]
+    var data = [Angle(startAngle: 0.0, endAngle: 0.30, color: .green, duration: 1.0),
+                Angle(startAngle: 0.31, endAngle: 0.35, color: .yellow, duration: 1.0),
+                Angle(startAngle: 0.36, endAngle: 1.0, color: .red, duration: 1.0)]
     
     // User Properties
     private var pointToDraw: CGFloat = 0.5
@@ -62,18 +62,19 @@ class MonochromeView: UIView {
     
     private func calculateNumberOfArcsRequiredAndDraw() {
         for (index, value) in data.enumerated() {
-//            print("****************")
-//            print(pointToDraw)
-//            print(value.startAngle)
-//            print(value.endAngle)
-//            print("\n")
-            if pointToDraw > value.startAngle && pointToDraw < value.endAngle {
+            print("****************")
+            print(pointToDraw)
+            print(value.startAngle)
+            print(value.endAngle)
+            print("\n")
+            if pointToDraw > value.startAngle {
+                // Since the index is starting from 0, doing +1
                 numberOfArcsToBeDrawn = index+1
             }
         }
         
-        calculateDurationSlots()
         print("numberOfArcsToBeDrawn", numberOfArcsToBeDrawn)
+        calculateDurationSlots()
         drawCircles()
     }
     
