@@ -10,21 +10,34 @@ import UIKit
 
 class DynamicSpeedoViewController: UIViewController {
 
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var spView: MonochromeView!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var monoSwitch: UISwitch!
+    
+    var value: CGFloat = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.text = "50"
+        label.text = "\(Int(slider.value))"
+    }
+    
+    @IBAction func didSlide(_ sender: UISlider) {
+        label.text = "\(Int(sender.value))"
+        value = CGFloat(sender.value)
     }
     
     @IBAction func changedSwitch(_ sender: UISwitch) {
-        let value = Float(textField.text!)!/100
-        print(value)
+        let newValue = value/100
         if sender.isOn {
-            spView.configureView(with: CGFloat(value), isMonoChrome: true)
+            spView.configureView(with: newValue, isMonoChrome: true)
         } else {
-            spView.configureView(with: CGFloat(value), isMonoChrome: false)
+            spView.configureView(with: newValue, isMonoChrome: false)
         }
+    }
+    
+    @IBAction func didTapAnimate(_ sender: UIButton) {
+        let newValue = value/100
+        spView.configureView(with: newValue, isMonoChrome: monoSwitch.isOn ? true : false)
     }
 }
