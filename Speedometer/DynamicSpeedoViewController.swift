@@ -19,6 +19,7 @@ class DynamicSpeedoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        value = CGFloat(slider.value)
         label.text = "\(Int(slider.value))"
     }
     
