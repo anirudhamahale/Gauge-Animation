@@ -62,11 +62,11 @@ class MonochromeView: UIView {
     
     private func calculateNumberOfArcsRequiredAndDraw() {
         for (index, value) in data.enumerated() {
-            print("****************")
-            print(pointToDraw)
-            print(value.startAngle)
-            print(value.endAngle)
-            print("\n")
+//            print("****************")
+//            print(pointToDraw)
+//            print(value.startAngle)
+//            print(value.endAngle)
+//            print("\n")
             if pointToDraw > value.startAngle && pointToDraw < value.endAngle {
                 numberOfArcsToBeDrawn = index+1
             }
