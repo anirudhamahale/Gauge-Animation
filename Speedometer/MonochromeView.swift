@@ -68,16 +68,20 @@ class MonochromeView: UIView {
     }
     
     private func calculateNumberOfArcsRequiredAndDraw() {
-        for (index, value) in data.enumerated() {
-            if pointToDraw > value.startAngle {
-                // Since the index is starting from 0, doing +1
-                numberOfArcsToBeDrawn = index+1
+        if pointToDraw != 0.0 {
+            for (index, value) in data.enumerated() {
+                if pointToDraw >= value.startAngle {
+                    // Since the index is starting from 0, doing +1
+                    numberOfArcsToBeDrawn = index+1
+                }
             }
+            
+            print("numberOfArcsToBeDrawn", numberOfArcsToBeDrawn)
+            calculateDurationSlots()
+            drawCircles()
+        } else {
+            print("point to draw is zero")
         }
-        
-        print("numberOfArcsToBeDrawn", numberOfArcsToBeDrawn)
-        calculateDurationSlots()
-        drawCircles()
     }
     
     private func calculateDurationSlots() {
@@ -100,6 +104,7 @@ class MonochromeView: UIView {
             let layer = CAShapeLayer()
             let currentData = data[currentIndex]
             if currentIndex == numberOfArcsToBeDrawn-1 {
+                // This is the last arc to draw
                 layer.path = self.createRectangle(startAngle: getRadians(previousStartAngle), endAngle: getRadians(pointToDraw))
             } else {
                 layer.path = self.createRectangle(startAngle: getRadians(previousStartAngle), endAngle: getRadians(currentData.endAngle))
@@ -133,6 +138,7 @@ class MonochromeView: UIView {
     
     public func configureView(with point: CGFloat, isMonoChrome: Bool) {
         self.layer.sublayers?.removeAll()
+        print(point)
         resetViews()
         pointToDraw = point
         isMonochromBar = isMonoChrome
